@@ -1,23 +1,32 @@
 wp.blocks.registerBlockType("myplugin/what-will-be-the-next-recipe", {
     title: "What Will Be The Next Recipe?", 
     icon: "carrot", 
-    category: "common", 
+    category: "common",
+    attributes: {
+        skyColor: {type: "string"},
+        grassColor: {type: "string"}
+    }, 
     // Control Backend
-    edit: function () {
+    edit: function (props) {
+        function updateSkyColor(event) {
+            props.setAttributes({skyColor: event.target.value})
+        }
+
+        function updateGrassColor(event) {
+            props.setAttributes({grassColor: event.target.value})
+        }
+
         return (
             <div>
-                <p>Hello, this is pharagraph</p>
-                <h2>Hi there!</h2>
+                <input type="text"placeholder="sky color" value={props.attributes.skyColor} onChange={updateSkyColor}/>
+                <input type="text"placeholder="grass color" value={props.attributes.grassColor} onChange={updateGrassColor}/>
             </div>
         )
     }, 
     // Control Frontend
-    save: function () {
+    save: function (props) {
         return (
-            <>
-                <h3>Easy pizzy</h3>
-                <h5>Lemon scwizzy</h5>
-            </>
+            <p>Today the sky is {props.attributes.skyColor} and the grass is {props.attributes.grassColor}</p>
         )
     }
 })
