@@ -127,9 +127,22 @@ wp.blocks.registerBlockType("myplugin/what-will-be-the-next-recipe", {
     }));
   },
   // Control Frontend
-  save: function (props) {
-    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Today the sky is ", props.attributes.skyColor, " and the grass is ", props.attributes.grassColor);
+  render: function (props) {
+    return null;
   }
+  /* If Add NULL in return, we not need deprecated function 
+  // For save changes
+  deprecated: [{
+      attributes: {
+          skyColor: {type: "string"},
+          grassColor: {type: "string"}
+      }, 
+      render: function (props) {
+          return (
+              <p>Today the sky is <span className="skyColor">{props.attributes.skyColor}</span> and the grass is <span className="grassColor">{props.attributes.grassColor}</span></p>
+          )
+      }
+  }]*/
 });
 }();
 /******/ })()
