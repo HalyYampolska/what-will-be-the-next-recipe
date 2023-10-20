@@ -130,7 +130,7 @@ wp.blocks.registerBlockType("myplugin/what-will-be-the-next-recipe", {
   render: function (props) {
     return null;
   }
-  /* If Add NULL in return, we not need deprecated function 
+  /* If Add NULL in return, we not need deprecated function and no need upgrade backend 
   // For save changes
   deprecated: [{
       attributes: {
