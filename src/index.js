@@ -1,3 +1,6 @@
+import "./index.scss"
+import {TextControl, Flex, FlexBlock, FlexItem, Button, Icon} from "@wordpress/components"
+
 wp.blocks.registerBlockType("myplugin/what-will-be-the-next-recipe", {
     title: "What Will Be The Next Recipe?", 
     icon: "carrot", 
@@ -7,22 +10,7 @@ wp.blocks.registerBlockType("myplugin/what-will-be-the-next-recipe", {
         grassColor: {type: "string"}
     }, 
     // Control Backend
-    edit: function (props) {
-        function updateSkyColor(event) {
-            props.setAttributes({skyColor: event.target.value})
-        }
-
-        function updateGrassColor(event) {
-            props.setAttributes({grassColor: event.target.value})
-        }
-
-        return (
-            <div>
-                <input type="text"placeholder="sky color" value={props.attributes.skyColor} onChange={updateSkyColor}/>
-                <input type="text"placeholder="grass color" value={props.attributes.grassColor} onChange={updateGrassColor}/>
-            </div>
-        )
-    }, 
+    edit: EditComponent, 
     // Control Frontend
     render: function (props) {
         return (
@@ -43,3 +31,28 @@ wp.blocks.registerBlockType("myplugin/what-will-be-the-next-recipe", {
         }
     }]*/
 })
+
+function EditComponent (props) {
+    function updateSkyColor(event) {
+        props.setAttributes({skyColor: event.target.value})
+    }
+
+    function updateGrassColor(event) {
+        props.setAttributes({grassColor: event.target.value})
+    }
+
+    return (
+        <div className="next-recipie-block">
+            <TextControl label="The next recipie will be:"/> 
+            <p>Answers:</p>
+            <Flex>
+                <FlexBlock>
+                    <TextControl />
+                </FlexBlock>
+                <FlexItem>
+                    <Button>Delete</Button>
+                </FlexItem>
+            </Flex>
+        </div>
+    )
+}

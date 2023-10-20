@@ -16,9 +16,13 @@ class WhatWillBeTheNextRecipe {
     }
 
     function adminAssets() {
-        wp_register_script('nextrecipeblocktype', plugin_dir_url(__FILE__) . 'build/index.js', array('wp-blocks', 'wp-element'));
+        // Registration 
+        wp_register_style('quizeditscss', plugin_dir_url(__FILE__) . 'build/index.css');
+        wp_register_script('nextrecipeblocktype', plugin_dir_url(__FILE__) . 'build/index.js', array('wp-blocks', 'wp-element', 'wp-editor'));
+        // Command use it 
         register_block_type('myplugin/what-will-be-the-next-recipe', array(
             'editor_script' => 'nextrecipeblocktype',
+            'editor_style' => 'quizeditscss', 
             'render_callback' => array($this, 'theHTML')
         ));
     }
