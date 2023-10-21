@@ -43,16 +43,17 @@ function EditComponent (props) {
 
     return (
         <div className="next-recipie-block">
-            <TextControl label="The next recipie will be:"/> 
-            <p>Answers:</p>
+            <TextControl label="The next recipie will be:" style={{fontSize: "20px"}}/> 
+            <p style={{fontSize: "13px", margin: "20px 0 8px 0"}}>Answers:</p>
             <Flex>
                 <FlexBlock>
                     <TextControl />
                 </FlexBlock>
                 <FlexItem>
-                    <Button>Delete</Button>
+                    <Button isLink className="next-recopie-delete">Delete</Button>
                 </FlexItem>
             </Flex>
+            <Button isPrimary>Add another answer</Button>
         </div>
     )
 }
