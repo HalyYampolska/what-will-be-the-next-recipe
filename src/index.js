@@ -3,11 +3,11 @@ import {TextControl, Flex, FlexBlock, FlexItem, Button, Icon} from "@wordpress/c
 
 wp.blocks.registerBlockType("myplugin/what-will-be-the-next-recipe", {
     title: "What Will Be The Next Recipe?", 
-    icon: "carrot", 
+    icon: "drumstick", 
     category: "common",
     attributes: {
-        skyColor: {type: "string"},
-        grassColor: {type: "string"}
+        question: {type: "string"},
+        answers: {type: "array", default: [""]}
     }, 
     // Control Backend
     edit: EditComponent, 
@@ -33,27 +33,41 @@ wp.blocks.registerBlockType("myplugin/what-will-be-the-next-recipe", {
 })
 
 function EditComponent (props) {
-    function updateSkyColor(event) {
-        props.setAttributes({skyColor: event.target.value})
+
+    function updateQuestion(value) {
+        props.setAttributes({question: value})
     }
 
-    function updateGrassColor(event) {
-        props.setAttributes({grassColor: event.target.value})
+    function deleteAnswer(indexToDelete) {
+        const newAnswers = props.attributes.answers.filter(function(x, index) {
+            return index != indexToDelete
+        })
+        props.setAttributes({answers: newAnswers})
     }
 
     return (
-        <div className="next-recipie-block">
-            <TextControl label="The next recipie will be:" style={{fontSize: "20px"}}/> 
+        <div className="next-recipe-block">
+            <TextControl label="Question:" value={props.attributes.question} onChange={updateQuestion} style={{fontSize: "20px"}}/> 
             <p style={{fontSize: "13px", margin: "20px 0 8px 0"}}>Answers:</p>
-            <Flex>
-                <FlexBlock>
-                    <TextControl />
-                </FlexBlock>
-                <FlexItem>
-                    <Button isLink className="next-recopie-delete">Delete</Button>
-                </FlexItem>
-            </Flex>
-            <Button isPrimary>Add another answer</Button>
+            {props.attributes.answers.map(function (answer, index) {
+                return (
+                    <Flex>
+                        <FlexBlock>
+                            <TextControl value={answer} onChange={newValue => {
+                                const newAnswers = props.attributes.answers.concat([])
+                                newAnswers[index] = newValue
+                                props.setAttributes({answers: newAnswers})
+                            }}/>
+                        </FlexBlock>
+                        <FlexItem>
+                            <Button isLink className="next-recipe-delete" onClick={() => deleteAnswer(index)}>Delete</Button>
+                        </FlexItem>
+                    </Flex>
+                )
+            })}
+            <Button isPrimary onClick={() => {
+                props.setAttributes({answers: props.attributes.answers.concat([""])})
+            }}>Add another answer</Button>
         </div>
     )
 }

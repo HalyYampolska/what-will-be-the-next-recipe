@@ -119,14 +119,15 @@ __webpack_require__.r(__webpack_exports__);
 
 wp.blocks.registerBlockType("myplugin/what-will-be-the-next-recipe", {
   title: "What Will Be The Next Recipe?",
-  icon: "carrot",
+  icon: "drumstick",
   category: "common",
   attributes: {
-    skyColor: {
+    question: {
       type: "string"
     },
-    grassColor: {
-      type: "string"
+    answers: {
+      type: "array",
+      default: [""]
     }
   },
   // Control Backend
@@ -151,20 +152,25 @@ wp.blocks.registerBlockType("myplugin/what-will-be-the-next-recipe", {
 });
 
 function EditComponent(props) {
-  function updateSkyColor(event) {
+  function updateQuestion(value) {
     props.setAttributes({
-      skyColor: event.target.value
+      question: value
     });
   }
-  function updateGrassColor(event) {
+  function deleteAnswer(indexToDelete) {
+    const newAnswers = props.attributes.answers.filter(function (x, index) {
+      return index != indexToDelete;
+    });
     props.setAttributes({
-      grassColor: event.target.value
+      answers: newAnswers
     });
   }
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    className: "next-recipie-block"
+    className: "next-recipe-block"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
-    label: "The next recipie will be:",
+    label: "Question:",
+    value: props.attributes.question,
+    onChange: updateQuestion,
     style: {
       fontSize: "20px"
     }
@@ -173,11 +179,28 @@ function EditComponent(props) {
       fontSize: "13px",
       margin: "20px 0 8px 0"
     }
-  }, "Answers:"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Flex, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.FlexBlock, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, null)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.FlexItem, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-    isLink: true,
-    className: "next-recopie-delete"
-  }, "Delete"))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
-    isPrimary: true
+  }, "Answers:"), props.attributes.answers.map(function (answer, index) {
+    return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Flex, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.FlexBlock, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.TextControl, {
+      value: answer,
+      onChange: newValue => {
+        const newAnswers = props.attributes.answers.concat([]);
+        newAnswers[index] = newValue;
+        props.setAttributes({
+          answers: newAnswers
+        });
+      }
+    })), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.FlexItem, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+      isLink: true,
+      className: "next-recipe-delete",
+      onClick: () => deleteAnswer(index)
+    }, "Delete")));
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_2__.Button, {
+    isPrimary: true,
+    onClick: () => {
+      props.setAttributes({
+        answers: props.attributes.answers.concat([""])
+      });
+    }
   }, "Add another answer"));
 }
 }();
