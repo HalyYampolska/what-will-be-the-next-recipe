@@ -30,8 +30,13 @@ class WhatWillBeTheNextRecipe {
     function theHTML($attributes) {
         /* This code change on ob_start 
         return '<p>Today the sky is ' .  $attributes['skyColor'] . ' and the grass is ' . $attributes['grassColor'] . '!!!</p>';*/
+        if (!is_admin()) {
+            wp_enqueue_script('nextRecipeFrontend', plugin_dir_url(__FILE__) . 'build/frontend.js', array('wp-element'));
+            wp_enqueue_style('nextRecipeFrontendStyles', plugin_dir_url(__FILE__) . 'build/frontend.css');
+        }
+
         ob_start(); ?>
-        <p>Today the sky is <?php echo esc_html($attributes['skyColor']) ?> and the grass is <?php echo esc_html($attributes['grassColor'])?>.</p>
+        <div class="next-recipe-update-me"></div>
         <?php return ob_get_clean();
     }
 }
