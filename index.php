@@ -8,7 +8,7 @@
     Author URI: https://halynayampolska.com/
 */
 
-if (!defined ('ABSPATH')) exit; // Exit if accessed directly 
+if ( !defined ( 'ABSPATH' ) ) exit; // Exit if accessed directly 
 
 class WhatWillBeTheNextRecipe {
     function __construct() {
@@ -17,12 +17,12 @@ class WhatWillBeTheNextRecipe {
 
     function adminAssets() {
         // Registration 
-        wp_register_style('quizeditscss', plugin_dir_url(__FILE__) . 'build/index.css');
+        wp_register_style('quizeditcss', plugin_dir_url(__FILE__) . 'build/index.css');
         wp_register_script('nextrecipeblocktype', plugin_dir_url(__FILE__) . 'build/index.js', array('wp-blocks', 'wp-element', 'wp-editor'));
         // Command use it 
         register_block_type('myplugin/what-will-be-the-next-recipe', array(
             'editor_script' => 'nextrecipeblocktype',
-            'editor_style' => 'quizeditscss', 
+            'editor_style' => 'quizeditcss', 
             'render_callback' => array($this, 'theHTML')
         ));
     }
@@ -36,7 +36,7 @@ class WhatWillBeTheNextRecipe {
         }
 
         ob_start(); ?>
-        <div class="next-recipe-update-me"></div>
+        <div class="next-recipe-update-me"><pre style="display: none;"><?php echo wp_json_encode($attributes) ?></pre></div>
         <?php return ob_get_clean();
     }
 }

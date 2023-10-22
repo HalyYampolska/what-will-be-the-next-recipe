@@ -1,4 +1,5 @@
 .next-recipe-frontend {
+    background-color: #EBEBEB;
     overflow: hidden;
     position: relative;
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.03);
@@ -6,13 +7,13 @@
     padding: 20px;
     border-radius: 4px;
     margin-bottom: 35px;
+    margin-top: 35px;
   
-    p {
-      font-size: 1.55rem;
+    .question {
       margin: 0 0 15px 0 !important;
     }
   
-    ul {
+    .answers {
       margin: 0;
       padding: 0;
       @media screen and (min-width: 767px) {
@@ -21,16 +22,21 @@
       }
     }
   
-    li {
+    .answer {
       vertical-align: middle;
-      font-size: 0.93rem;
+      font-size: 80%;
       flex: 1;
       margin: 0 0 15px 0;
+
+      &::before {
+        content: "";
+    }
+
       @media screen and (min-width: 767px) {
         margin: 0 20px 0 0;
       }
       padding: 0;
-      list-style: none;
+      list-style: none !important;
       cursor: pointer;
       padding: 10px;
       border-radius: 4px;
