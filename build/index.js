@@ -117,13 +117,6 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-(function () {
-  wp.data.subscribe(function () {
-    const results = wp.data.select("core/block-editor").getBlocks().filter(function (block) {
-      return block.name == "myplugin/what-will-be-the-next-recipe" && block.attributes.correctAnswer == undefined;
-    });
-  });
-})();
 wp.blocks.registerBlockType("myplugin/what-will-be-the-next-recipe", {
   title: "What Will Be The Next Recipe?",
   icon: "drumstick",
@@ -144,7 +137,7 @@ wp.blocks.registerBlockType("myplugin/what-will-be-the-next-recipe", {
   // Control Backend
   edit: EditComponent,
   // Control Frontend
-  render: function (props) {
+  save: function (props) {
     return null;
   }
   /* If Add NULL in return, we not need deprecated function and no need upgrade backend 
@@ -170,7 +163,7 @@ function EditComponent(props) {
   }
   function deleteAnswer(indexToDelete) {
     const newAnswers = props.attributes.answers.filter(function (x, index) {
-      return index !== indexToDelete;
+      return index != indexToDelete;
     });
     props.setAttributes({
       answers: newAnswers
