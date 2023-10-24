@@ -9,7 +9,7 @@ wp.blocks.registerBlockType("myplugin/what-will-be-the-next-recipe", {
     attributes: {
         question: {type: "string"},
         answers: {type: "array", default: [""]}, 
-        allAnswers: {type: "number", default: undefined}
+        /*allAnswers: {type: "number", default: undefined}*/
     }, 
     // Control Backend
     edit: EditComponent, 
@@ -19,19 +19,6 @@ wp.blocks.registerBlockType("myplugin/what-will-be-the-next-recipe", {
             null
         )
     }
-    /* If Add NULL in return, we not need deprecated function and no need upgrade backend 
-    // For save changes
-    deprecated: [{
-        attributes: {
-            skyColor: {type: "string"},
-            grassColor: {type: "string"}
-        }, 
-        render: function (props) {
-            return (
-                <p>Today the sky is <span className="skyColor">{props.attributes.skyColor}</span> and the grass is <span className="grassColor">{props.attributes.grassColor}</span></p>
-            )
-        }
-    }]*/
 })
 
 function EditComponent (props) {
