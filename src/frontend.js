@@ -2,6 +2,10 @@ import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import './frontend.scss';
 
+const recipeUrls = {
+    "Meat dishes": "/recipe/gulyash/",
+};
+
 const divsToUpdate = document.querySelectorAll('.next-recipe-update-me');
 
 divsToUpdate.forEach(function (div) {
@@ -14,24 +18,22 @@ function Quiz(props) {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isCorrectDelayed, setIsCorrectDelayed] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
-
+  const [selectedCategory, setSelectedCategory] = useState(null);  
 
   useEffect(() => {
     if (selectedAnswer !== null) {
       setTimeout(() => {
         setIsCorrectDelayed(true);
-      }, 1000);
+      }, 3000);
     }
   }, [selectedAnswer]);
 
   function handleAnswer(index) {
     setSelectedAnswer(index);
+    setSelectedCategory(props.answers[index]);
   }
 
   function handleButtonClick() {
-    // Здесь вы можете выполнить действия, которые нужно выполнить при нажатии на кнопку
-    // Например, отобразить рекомендации
-    // Затем установите флаг, чтобы указать, что кнопка была нажата
     setButtonClicked(true);
   }
   
@@ -69,18 +71,20 @@ function Quiz(props) {
       <div className={'message' + (selectedAnswer !== null ? ' message--visible' : '')}>
 
         <p>We recommend you: </p>
-        {!buttonClicked && (
-            <button onClick={handleButtonClick}
+        {!buttonClicked && selectedCategory && (
+            <a href={recipeUrls[selectedCategory]} target="_blank" rel="noopener noreferrer">
+            <button
             style={{
-                backgroundColor: '#009e2f', // Цвет фона
-                color: '#ffffff', // Цвет текста
-                padding: '10px 20px', // Отступы внутри кнопки
-                border: 'none', // Убираем границу
-                borderRadius: '5px', // Закругляем углы
-                cursor: 'pointer', // Изменяем курсор при наведении
+                backgroundColor: '#009e2f', 
+                color: '#ffffff',
+                padding: '10px 20px',
+                border: 'none', 
+                borderRadius: '5px', 
+                cursor: 'pointer', 
                 marginLeft: '10px'
             }}
-            >Randome Recipe</button>
+            >Try Randome Recipe</button>
+            </a>
         )}
       </div>
     </div>

@@ -118,6 +118,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+const recipeUrls = {
+  "Meat dishes": "/recipe/gulyash/"
+};
 const divsToUpdate = document.querySelectorAll('.next-recipe-update-me');
 divsToUpdate.forEach(function (div) {
   const data = JSON.parse(div.querySelector('pre').innerHTML);
@@ -130,20 +133,19 @@ function Quiz(props) {
   const [selectedAnswer, setSelectedAnswer] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
   const [isCorrectDelayed, setIsCorrectDelayed] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
   const [buttonClicked, setButtonClicked] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(false);
+  const [selectedCategory, setSelectedCategory] = (0,react__WEBPACK_IMPORTED_MODULE_0__.useState)(null);
   (0,react__WEBPACK_IMPORTED_MODULE_0__.useEffect)(() => {
     if (selectedAnswer !== null) {
       setTimeout(() => {
         setIsCorrectDelayed(true);
-      }, 1000);
+      }, 3000);
     }
   }, [selectedAnswer]);
   function handleAnswer(index) {
     setSelectedAnswer(index);
+    setSelectedCategory(props.answers[index]);
   }
   function handleButtonClick() {
-    // Здесь вы можете выполнить действия, которые нужно выполнить при нажатии на кнопку
-    // Например, отобразить рекомендации
-    // Затем установите флаг, чтобы указать, что кнопка была нажата
     setButtonClicked(true);
   }
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
@@ -169,24 +171,21 @@ function Quiz(props) {
     d: "M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"
   })), answer))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: 'message' + (selectedAnswer !== null ? ' message--visible' : '')
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "We recommend you: "), !buttonClicked && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-    onClick: handleButtonClick,
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "We recommend you: "), !buttonClicked && selectedCategory && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
+    href: recipeUrls[selectedCategory],
+    target: "_blank",
+    rel: "noopener noreferrer"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     style: {
       backgroundColor: '#009e2f',
-      // Цвет фона
       color: '#ffffff',
-      // Цвет текста
       padding: '10px 20px',
-      // Отступы внутри кнопки
       border: 'none',
-      // Убираем границу
       borderRadius: '5px',
-      // Закругляем углы
       cursor: 'pointer',
-      // Изменяем курсор при наведении
       marginLeft: '10px'
     }
-  }, "Randome Recipe")));
+  }, "Try Randome Recipe"))));
 }
 /* harmony default export */ __webpack_exports__["default"] = (Quiz);
 }();
