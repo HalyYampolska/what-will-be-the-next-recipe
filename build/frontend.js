@@ -119,7 +119,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 const recipeUrls = {
-  "Meat dishes": "/recipe/gulyash/"
+  "Meat dishes": ["/recipe/gulyash", "/recipe/holubtsi"]
 };
 const divsToUpdate = document.querySelectorAll('.next-recipe-update-me');
 divsToUpdate.forEach(function (div) {
@@ -147,6 +147,14 @@ function Quiz(props) {
   }
   function handleButtonClick() {
     setButtonClicked(true);
+    if (selectedCategory) {
+      const recipes = recipeUrls[selectedCategory];
+      if (recipes && recipes.length > 0) {
+        const randomIndex = Math.floor(Math.random() * recipes.length);
+        const randomRecipeUrl = recipes[randomIndex];
+        window.open(randomRecipeUrl, '_blank');
+      }
+    }
   }
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "next-recipe-frontend"
@@ -171,11 +179,7 @@ function Quiz(props) {
     d: "M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"
   })), answer))), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: 'message' + (selectedAnswer !== null ? ' message--visible' : '')
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "We recommend you: "), !buttonClicked && selectedCategory && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("a", {
-    href: recipeUrls[selectedCategory],
-    target: "_blank",
-    rel: "noopener noreferrer"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "We recommend you: "), !buttonClicked && selectedCategory && (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
     style: {
       backgroundColor: '#009e2f',
       color: '#ffffff',
@@ -184,8 +188,9 @@ function Quiz(props) {
       borderRadius: '5px',
       cursor: 'pointer',
       marginLeft: '10px'
-    }
-  }, "Try Randome Recipe"))));
+    },
+    onClick: handleButtonClick
+  }, "Try Random Recipe")));
 }
 /* harmony default export */ __webpack_exports__["default"] = (Quiz);
 }();

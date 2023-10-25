@@ -3,7 +3,10 @@ import ReactDOM from 'react-dom';
 import './frontend.scss';
 
 const recipeUrls = {
-    "Meat dishes": "/recipe/gulyash/",
+  "Meat dishes": [
+    "/recipe/gulyash",
+    "/recipe/holubtsi"
+  ]
 };
 
 const divsToUpdate = document.querySelectorAll('.next-recipe-update-me');
@@ -18,7 +21,7 @@ function Quiz(props) {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [isCorrectDelayed, setIsCorrectDelayed] = useState(false);
   const [buttonClicked, setButtonClicked] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(null);  
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   useEffect(() => {
     if (selectedAnswer !== null) {
@@ -35,8 +38,16 @@ function Quiz(props) {
 
   function handleButtonClick() {
     setButtonClicked(true);
+
+    if (selectedCategory) {
+      const recipes = recipeUrls[selectedCategory];
+      if (recipes && recipes.length > 0) {
+        const randomIndex = Math.floor(Math.random() * recipes.length);
+        const randomRecipeUrl = recipes[randomIndex];
+        window.open(randomRecipeUrl, '_blank');
+      }
+    }
   }
-  
 
   return (
     <div className="next-recipe-frontend">
@@ -69,22 +80,22 @@ function Quiz(props) {
         ))}
       </ul>
       <div className={'message' + (selectedAnswer !== null ? ' message--visible' : '')}>
-
         <p>We recommend you: </p>
         {!buttonClicked && selectedCategory && (
-            <a href={recipeUrls[selectedCategory]} target="_blank" rel="noopener noreferrer">
-            <button
+          <button
             style={{
-                backgroundColor: '#009e2f', 
-                color: '#ffffff',
-                padding: '10px 20px',
-                border: 'none', 
-                borderRadius: '5px', 
-                cursor: 'pointer', 
-                marginLeft: '10px'
+              backgroundColor: '#009e2f',
+              color: '#ffffff',
+              padding: '10px 20px',
+              border: 'none',
+              borderRadius: '5px',
+              cursor: 'pointer',
+              marginLeft: '10px'
             }}
-            >Try Randome Recipe</button>
-            </a>
+            onClick={handleButtonClick}
+          >
+            Try Random Recipe
+          </button>
         )}
       </div>
     </div>
